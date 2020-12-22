@@ -216,7 +216,7 @@ namespace MazeSimulator.Maze
                 Room curRoom = GetRoom(curPoint);
                 if (curRoom == null)
                 {
-                    MessageBox.Show("Walk to empty block. Please check your map.");
+                    MessageBox.Show("Walk to empty block or out of map. Please check your map.");
                     return false;
                 }
                 curRoom.Walk();
@@ -250,7 +250,16 @@ namespace MazeSimulator.Maze
 
         private Room GetRoom(Point pt)
         {
-            return roomBlocks[pt.Y][pt.X].GetRoom();
+            Room room;
+            try
+            {
+                room = roomBlocks[pt.Y][pt.X].GetRoom();
+            }
+            catch
+            {
+                return null;
+            }
+            return room;
         }
 
         private Room GetRoom(int row, int col)
