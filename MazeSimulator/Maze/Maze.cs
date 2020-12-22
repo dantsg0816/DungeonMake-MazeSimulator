@@ -149,7 +149,8 @@ namespace MazeSimulator.Maze
 
             for (int i = 0; i < times; i++)
             {
-                Simulate();
+                if (!Simulate())
+                    return;
             }
 
             double totalWalkTimes = GetTotalWalkTimes();
@@ -206,13 +207,18 @@ namespace MazeSimulator.Maze
             return true;
         }
 
-        private void Simulate()
+        private bool Simulate()
         {
             Point curPoint = entranceList[rand.Next(entranceList.Count)];
             int source = 0;
             while (true)
             {
                 Room curRoom = GetRoom(curPoint);
+                if (curRoom == null)
+                {
+                    MessageBox.Show("Walk to empty block. Please check your map.");
+                    return false;
+                }
                 curRoom.Walk();
                 int way = curRoom.GetNextWay(source);
 
@@ -238,7 +244,7 @@ namespace MazeSimulator.Maze
                 }
 
                 if (curPoint.X < 0)
-                    break;
+                    return true;
             }
         }
 
