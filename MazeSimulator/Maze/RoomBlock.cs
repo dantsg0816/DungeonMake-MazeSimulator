@@ -52,5 +52,10 @@ namespace MazeSimulator.Maze
         {
             return room;
         }
+
+        public void ClearRoom()
+        {
+            room = null;
+        }
     }
 }

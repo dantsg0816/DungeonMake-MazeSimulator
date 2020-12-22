@@ -175,15 +175,21 @@ namespace MazeSimulator.Maze
             {
                 for (int c = 0; c < cols; c++)
                 {
-                    Room room = GetRoom(r, c);
-                    if (room != null)
+                    if (!roomBlocks[r][c].Controls.OfType<Room>().Any<Room>())
+                        roomBlocks[r][c].ClearRoom();
+                    else
                     {
-                        room.Reset();
-                        if (c == 0 && room.RoomWay > 8)
-                            bHasExit = true;
-                        bHasRoom = true;
-                        if (room.IsEntrance())
-                            entranceList.Add(new Point(c, r));
+                        Room room = GetRoom(r, c);
+
+                        if (room != null)
+                        {
+                            room.Reset();
+                            if (c == 0 && room.RoomWay > 8)
+                                bHasExit = true;
+                            bHasRoom = true;
+                            if (room.IsEntrance())
+                                entranceList.Add(new Point(c, r));
+                        }
                     }
                 }
             }
